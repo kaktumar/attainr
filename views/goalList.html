@@ -1,0 +1,107 @@
+<div class="row" ng-controller="goalListCtrl">
+    <div class="col-xs-4 fixed mt-2">
+
+        <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class="card" ng-repeat="goal in userGoals | orderBy : deadline" is-open="status.isItemOpen[$index]" ng-click="scrollToCurrentDate()">
+                <div uib-accordion-heading>
+                    <div class="card-header" role="tab">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h5>
+                                    {{goal.title}}
+                                </h5>
+                            </li>
+                            <li class="list-inline-item float-xs-right">
+                                <a class="btn btn-danger" role="button" ng-show="status.editMode" ng-click="deleteGoal($index)">Delete</a>
+                            </li>
+                            <li class="list-inline-item float-xs-right mr-l">
+                                <h6 ng-show="goal.completed">
+                                    <i>Completed</i>
+                                </h6>
+                                <h6 ng-hide="goal.completed">
+                                    <i>In Progress</i>
+                                </h6>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <p>{{goal.description}}</p>
+                    <h6>Deadline: {{goal.deadline| amDateFormat:'M/D/YYYY'}}</h6>
+                </div>
+            </div>
+        </uib-accordion>
+        <a class="btn btn-primary btn-block" role="button" ng-click="open()" ui-sref="addMainGoal">+ Add a Goal</a>
+        <a class="btn btn-primary btn-block" role="button" ng-click="status.editMode=!(status.editMode)">Edit Goals</a>
+
+        <script type="text/ng-template" id="formModal.html">
+            <div ui-view="goalList" ng-controller="mainGoalFormCtrl"></div>
+        </script>
+    </div>
+
+    <div class="col-xs-7 offset-xs-5">
+        <ul class="timeline">
+            <li class="timeline-inverted" ng-repeat="subGoal in userGoals[status.openGoalIndex].subGoalList | filter: {completed: true} | orderBy : 'deadline'" ng-show="status.isAccordionOpen" style={{distanceFromToday($index)}}>
+                <div class="timeline-badge success"></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">{{subGoal.title}}</h4>
+                        <h6 ng-show="subGoal.completed">
+                            <i>Completed</i>
+                        </h6>
+                        <h6 ng-hide="subGoal.completed">
+                            <i>In Progress</i>
+                        </h6>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{subGoal.description}}</p>
+                        <h6>Deadline: {{subGoal.deadline | amDateFormat:'M/D/YYYY'}}</h6>
+                    </div>
+                </div>
+            </li>
+            <li id="currentDate">
+                <div class="timeline-badge success"></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Today's Date is:</h4>
+                        <h6>
+                            {{today.date | amDateFormat:'M/D/YYYY'}}
+                        </h6>
+                    </div>
+                    <div class="timeline-body" ng-show="status.deadlineApproaching">
+                        <h4 class="timeline-title">Reminder!</h4>
+                        <p>The deadline for {{status.approachingSubgoal.title}} is approaching.</p>
+                    </div>
+                    <div class="timeline-body" ng-show="status.deadlineToday">
+                        <h4 class="timeline-title">Reminder!</h4>
+                        <p>The deadline for {{status.approachingSubgoal.title}} is today!</p>
+                    </div>
+                </div>
+            </li>
+            <li class="timeline-inverted"
+                ng-repeat="subGoal in userGoals[status.openGoalIndex].subGoalList | filter: {completed: false} | orderBy : 'deadline'"
+                ng-show="status.isAccordionOpen" style={{distanceFromToday($index)}}>
+                <div class="timeline-badge success"></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">{{subGoal.title}}</h4>
+                        <h6 ng-show="subGoal.completed">
+                            <i>Completed</i>
+                        </h6>
+                        <h6 ng-hide="subGoal.completed">
+                            <i>In Progress</i>
+                        </h6>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{subGoal.description}}</p>
+                        <h6>Deadline: {{subGoal.deadline | amDateFormat:'M/D/YYYY'}}</h6>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+
+</div>

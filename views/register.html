@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <h1 class="display-3">Attainr</h1>
+    <p class="lead">Turn your dreams into goals</p>
+</div>
+
+
+
+<div class="row">
+        <form class="form-signin col-xs-4 offset-xs-4" name="regForm">
+            <div class="form-group">
+                <label for="inputEmail">Email address</label>
+                <input type="email" id="inputEmail" class="form-control" ng-model="user.email" required autofocus>
+                <p ng-show="regForm.email.$invalid">Enter a valid email.</p>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" >Password</label>
+                <input type="password" id="inputPassword" class="form-control" ng-model="user.password" placeholder="Password" required>
+                <p ng-show="regForm.password.$error.minlength">Min password length is 8 characters.</p>
+            </div>
+            <!--<div class="form-group">-->
+                <!--<label for="inputConfirmPassword">Confirm Password</label>-->
+                <!--<input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>-->
+            <!--</div>-->
+            <button class="btn btn-lg btn-primary btn-block" ng-click="signUp()">Sign Up</button>
+        </form>
+    </div>

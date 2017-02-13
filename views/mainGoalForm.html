@@ -1,0 +1,44 @@
+<form name="mainGoalForm">
+    <fieldset>
+        <legend>Create a Main Goal</legend>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-2 col-form-label">Goal Name</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="text" value="" id="example-text-input" ng-model="mainGoalData.title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-search-input" class="col-xs-2 col-form-label">What do you want to accomplish?</label>
+            <div class="col-xs-5">
+                <textarea class="form-control" id="example-search-input" rows="3" ng-model="mainGoalData.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group row" ng-repeat="target in mainGoalData.targets">
+            <div class="col-xs-2">
+                <input class="form-control" type="number" ng-model="target.value">
+            </div>
+            <label for="units" class="col-xs-1 col-form-label">Units</label>
+            <div class="col-xs-2">
+                <input class="form-control" type="text" value="" id="units" ng-model="target.units">
+            </div>
+        </div>
+        <button class="btn btn-primary" ng-click="addTarget(mainGoalData)">+Add a Quantifiable Target</button>
+        <div class="form-group row">
+            <label for="example-url-input" class="col-xs-2 col-form-label">What's the deadline?</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="date" id="example-url-input" ng-model="mainGoalData.deadline">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary" ng-click="close()">Cancel</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary" ui-sref="addSubGoal">+Add a Sub Goal</button>
+            </div>
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary" ng-click="submitData(); close()">Finish</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
